@@ -1,78 +1,43 @@
-import React, { useState } from "react";
-import {Badge, Button, Col, Popover} from 'antd'
-import { WrapperHeader, WrapperTextHeader, WrapperHeaderAccount, WrapperTextHeaderSmall, WrapperContentPopup } from "./style";
-import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
-import {UserOutlined, CaretDownOutlined, ShoppingCartOutlined} from '@ant-design/icons'
+import React from "react";
+import { Button, Col } from 'antd';
+import { Link } from 'react-router-dom'; // Thêm dòng này
+import { LogoImage, Navigation, NavigationItem, WrapperHeader, LogButton } from "./style";
+import logoImage from '../../assets/images/logo.jpg';
 import {useNavigate} from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
-import * as UserService from '../../services/UserService'
-import {resetUser} from '../../redux/slices/userSlice'
 
 const HeaderComponent = () => {
     const navigate = useNavigate()
-    const user = useSelector((state) => state.user)
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false)
     const handleNavigateLogin = () => {
         navigate('/sign-in')
     }
-
-    const handleLogout = async () => {
-        setLoading(true)
-        await UserService.logoutUser()
-        dispatch(resetUser())
-        setLoading(false)
+    const handleNavigateRegister = () => {
+        navigate('/sign-in')
     }
-    const content = (
-        <div>
-            <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
-            <WrapperContentPopup onClick={() => navigate('/profile-user')} >Thông tin người dùng</WrapperContentPopup>
-        </div>
-    )
     return (
-        <div style={{width: '100%', background: '#84D9BA', display: 'flex', justifyContent: 'center'}}>
+        <div>
             <WrapperHeader>
-                <Col span={5}>
-                    <WrapperTextHeader>Nhat Vy</WrapperTextHeader>
+                <Col span={4}>
+                    <Link to="/"> 
+                        <LogoImage src={logoImage} alt="Logo" />
+                    </Link> 
                 </Col>
-                <Col span={13}>
-                    <ButtonInputSearch 
-                        size="large"
-                        bordered={false}
-                        textButton="Tìm kiếm"
-                        placeholder="input search text" 
-                        //onSearch={onSearch}
-                    />
+                <Col span={14}>
+                    <Navigation>
+                        <NavigationItem>Tìm tàu</NavigationItem>
+                        <NavigationItem>Blog</NavigationItem>
+                        <NavigationItem>Quy định</NavigationItem>
+                        <NavigationItem>Hướng dẫn</NavigationItem>
+                    </Navigation>
                 </Col>
-                <Col span={6} style={{display: 'flex', gap: '54px', alignItems: 'center'}}>
-                    <WrapperHeaderAccount>
-                        <UserOutlined style={{fontSize: '30px'}}  />
-                        {!user?.access_token ? (
-                            <>
-                                <Popover content={content} trigger="click">
-                                    <div style={{cursor: 'pointer'}}>{user.name.length > 2 ? user.name : 'User'}</div>
-                                </Popover>
-                            </>
-                        ) : (
-                            <div onClick={handleNavigateLogin} style={{cursor: 'pointer'}}>
-                                <WrapperTextHeaderSmall>Đăng nhập/ Đăng ký</WrapperTextHeaderSmall>
-                                <div>
-                                    <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>
-                                    <CaretDownOutlined />
-                                </div>
-                            </div>
-                        )}
-                    </WrapperHeaderAccount>
-                    <div>
-                        <Badge count={4} size="small">
-                            <ShoppingCartOutlined style={{fontSize: '30px', color:'#fff'}} />
-                        </Badge>
-                        <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
-                    </div>
+                <Col span={6}>
+                    <LogButton>
+                        <Button onClick={handleNavigateLogin} style={{cursor: 'pointer'}} type="dashed">Đăng nhập</Button>
+                        <Button onClick={handleNavigateRegister} style={{cursor: 'pointer'}} type="dashed">Đăng ký</Button>
+                    </LogButton>
                 </Col>
             </WrapperHeader>
         </div>
-    );
+    )
 }
 
 export default HeaderComponent;
