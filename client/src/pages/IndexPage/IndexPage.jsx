@@ -52,7 +52,7 @@ const IndexPage = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ width: '70%', textAlign: 'center', border: '1px solid #ccc', borderRadius: '10px', padding: '20px' }}>
+            <div style={{ width: '70%', textAlign: 'center', border: '1px solid #ccc', borderRadius: '50px', padding: '20px' }}>
                 <h2 style={{ fontSize: '24px'}}>Mở cánh cửa khám phá cùng ViVu</h2>
                 <h3 style={{ fontSize: '20px' }}>ViVu - Tàu di chuyển bạn đến những vùng đất mới với một hành trình bất tận</h3>
                 <div>
@@ -66,7 +66,7 @@ const IndexPage = () => {
                         <label style={{ marginBottom: '10px'}}>Điểm đi</label>
                         <Select
                             placeholder="Chọn điểm đi"
-                            style={{ width: '100%', marginBottom: '10px' }}
+                            style={{ width: '100%', marginBottom: '10px'}}
                             onChange={(value) => console.log(value)}
                         >
                             <Option value="hanoi">Hà Nội</Option>

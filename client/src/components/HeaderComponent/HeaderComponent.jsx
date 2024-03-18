@@ -11,7 +11,7 @@ const HeaderComponent = () => {
         navigate('/sign-in')
     }
     const handleNavigateRegister = () => {
-        navigate('/sign-in')
+        navigate('/sign-up')
     }
     return (
         <div>
