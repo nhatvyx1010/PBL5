@@ -158,29 +158,29 @@ const App = () => {
 
   const defaultColumns = [
     {
-      title: 'name',
+      title: 'Tên',
       dataIndex: 'name',
       width: '30%',
       editable: true,
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: 'age',
+      title: 'Tuổi',
       dataIndex: 'age',
       sorter: (a, b) => a.age - b.age,
     },
     {
-      title: 'address',
+      title: 'Địa chỉ',
       dataIndex: 'address',
       sorter: (a, b) => a.address.localeCompare(b.address),
     },
     {
-      title: 'date',
+      title: 'Ngày sinh',
       dataIndex: 'date',
       render: (text, record) => moment(text).format('DD/MM/YYYY'),
     },
     {
-      title: 'operation',
+      title: '',
       dataIndex: 'operation',
       render: (_, record) => (
         <div>
@@ -198,7 +198,7 @@ const App = () => {
   return (
     <div>
       <Button type="primary" onClick={() => setOpenAddModal(true)} style={{ marginBottom: '20px' }}>
-        Add Employee
+        Thêm khách hàng
       </Button>
       <Modal
         title="Add Employee"
@@ -267,7 +267,7 @@ const App = () => {
 
           <div style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit">
-              Add Employee
+            Thêm khách hàng
             </Button>
           </div>
         </Form>

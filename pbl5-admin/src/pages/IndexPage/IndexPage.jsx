@@ -8,18 +8,16 @@ import {
   InfoCircleFilled,
   DotChartOutlined,
   ScheduleFilled,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  QqOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import EmployeeComponent from '../../components/EmployeeComponent/EmployeeComponent';
 import ProviderComponent from '../../components/ProviderComponent/ProviderComponent';
 import BookingInfoComponent from '../../components/BookingInfoComponent/BookingInfoComponent';
 import SimpleCalendar from '../../components/SimpleCalendarComponent/SimpleCalendarComponent';
-// import BookingInfoComponent from './SupplierComponent';
-// import TicketInfoComponent from './TicketInfoComponent';
-// import ScheduleComponent from './ScheduleComponent';
-// import OrderComponent from './OrderComponent';
-// import LogoutComponent from './LogoutComponent';
+import CartComponent from '../../components/CartComponent/CartComponent';
+import StaffComponent from '../../components/StaffComponent/StaffComponent';
 
 const { Header, Sider, Content } = Layout;
 
@@ -40,12 +38,14 @@ const IndexPage: React.FC = () => {
       case '3':
         return <ProviderComponent />;
       case '4':
-        return <BookingInfoComponent />;
+        return <StaffComponent />;
       case '5':
-        return <SimpleCalendar />;
+        return <BookingInfoComponent />;
       case '6':
-        return <EmployeeComponent />;
+        return <SimpleCalendar />;
       case '7':
+        return <CartComponent />;
+      case '8':
         return <EmployeeComponent />;
       default:
         return null;
@@ -92,6 +92,14 @@ const IndexPage: React.FC = () => {
             },
             {
               key: '4',
+              icon: <QqOutlined />,
+              label: 'Nhân viên',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '5',
               icon: <InfoCircleFilled />,
               label: 'Thông tin đặt vé',
               style: { 
@@ -99,7 +107,7 @@ const IndexPage: React.FC = () => {
               }
             },
             {
-              key: '5',
+              key: '6',
               icon: <ScheduleFilled />,
               label: 'Lịch trình',
               style: { 
@@ -107,7 +115,7 @@ const IndexPage: React.FC = () => {
               }
             },
             {
-              key: '6',
+              key: '7',
               icon: <ShoppingCartOutlined />,
               label: 'Đơn hàng',
               style: { 
@@ -115,7 +123,7 @@ const IndexPage: React.FC = () => {
               }
             },
             {
-              key: '7',
+              key: '8',
               icon: <LogoutOutlined />,
               label: 'Đăng xuất',
               style: { 

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Table, Modal, DatePicker } from 'antd';
-import moment from 'moment'; // Import moment for date manipulation
+import { Button, Form, Input, Popconfirm, Table, Modal } from 'antd';
 
 const EditableContext = React.createContext(null);
 
@@ -93,30 +92,29 @@ const App = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [recordToUpdate, setRecordToUpdate] = useState(null);
-  const [form] = Form.useForm(); // Add this line to create the form instance
+  const [formAdd] = Form.useForm(); // Add this line to create the form instance
+  const [formUpdate] = Form.useForm(); // Add this line to create the form instance
 
   useEffect(() => {
     // Set initial data source
     setDataSource([
       {
         key: '0',
-        ID: '1',
-        DATE: moment(),
-        START_AT: 'DN',
-        ARRIVAL_AT: 'HN',
-        KILOMETER: '100',
-        COST: '50',
-        "DATE/TIME": moment(),
+        name: 'Nguyễn Viết Hoài Bảo',
+        age: '22',
+        address: 'Đà Nẵng',
       },
       {
         key: '1',
-        ID: '2',
-        DATE: moment(),
-        START_AT: 'HN',
-        ARRIVAL_AT: 'HCM',
-        KILOMETER: '120',
-        COST: '60',
-        "DATE/TIME": moment(),
+        name: 'Nguyễn Minh Ngọc',
+        age: '20',
+        address: 'Quãng Ngãi',
+      },
+      {
+        key: '2',
+        name: 'Trần Kim Hiếu',
+        age: '21',
+        address: 'Quãng Nam',
       },
     ]);
     setCount(2);
@@ -131,18 +129,16 @@ const App = () => {
     const newData = {
       key: count.toString(),
       ...values,
-      DATE: moment(values.DATE), // Convert date to moment object
-      "DATE/TIME": moment(values["DATE/TIME"]),
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
-    form.resetFields(); // Clear form fields
+    formAdd.resetFields(); // Clear form fields
     setOpenAddModal(false); // Close modal after successful addition
   };
 
   const handleUpdate = (record) => {
     setRecordToUpdate({ ...record });
-    form.setFieldsValue(record); // Set form fields with current row data
+    formUpdate.setFieldsValue(record); // Set form fields with current row data
     setOpenUpdateModal(true);
   };
 
@@ -154,54 +150,29 @@ const App = () => {
       newData.splice(index, 1, {
         ...item,
         ...row,
-        DATE: moment(row.DATE), // Convert date to moment object
-        "DATE/TIME": moment(row["DATE/TIME"]),
       });
       setDataSource(newData);
       setOpenUpdateModal(false);
     }
   };
-  
 
   const defaultColumns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      width: '10%',
+      title: 'Tên',
+      dataIndex: 'name',
+      width: '30%',
       editable: true,
-      sorter: (a, b) => a.ID.localeCompare(b.ID),
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Ngày',
-      dataIndex: 'DATE',
-      render: (text, record) => moment(text).format('DD/MM/YYYY'),
+      title: 'Tuổi',
+      dataIndex: 'age',
+      sorter: (a, b) => a.age - b.age,
     },
     {
-      title: 'Nơi đi',
-      dataIndex: 'START_AT',
-      render: (text, record) => locationMap[text] || text,
-      sorter: (a, b) => a.START_AT.localeCompare(b.START_AT),
-    },
-    {
-      title: 'Nơi đến',
-      dataIndex: 'ARRIVAL_AT',
-      render: (text, record) => locationMap[text] || text,
-      sorter: (a, b) => a.ARRIVAL_AT.localeCompare(b.ARRIVAL_AT),
-    },
-    {
-      title: 'Kilometer',
-      dataIndex: 'KILOMETER',
-      sorter: (a, b) => parseFloat(a.KILOMETER) - parseFloat(b.KILOMETER),
-    },
-    {
-      title: 'Giá tiền',
-      dataIndex: 'COST',
-      sorter: (a, b) => parseFloat(a.COST) - parseFloat(b.COST),
-    },
-    {
-      title: 'Ngày/Thời gian',
-      dataIndex: 'DATE/TIME',
-      render: (text, record) => moment(text).format('DD/MM/YYYY HH:mm'),
+      title: 'Địa chỉ',
+      dataIndex: 'address',
+      sorter: (a, b) => a.address.localeCompare(b.address),
     },
     {
       title: '',
@@ -219,15 +190,76 @@ const App = () => {
     },
   ];
 
-  const locationMap = {
-    'DN': 'Đà Nẵng',
-    'HN': 'Hà Nội',
-    'HCM': 'TP HCM',
-    // Thêm các địa điểm khác nếu cần thiết
-  };
-
   return (
     <div>
+      <Button type="primary" onClick={() => setOpenAddModal(true)} style={{ marginBottom: '20px' }}>
+      Thêm đơn hàng
+      </Button>
+      <Modal
+        title="Add Employee"
+        centered
+        visible={openAddModal}
+        onCancel={() => setOpenAddModal(false)}
+        footer={null}
+        style={{ textAlign: 'center' }}
+      >
+        <Form
+          layout="vertical"
+          onFinish={(values) => {
+            handleAdd(values);
+            setOpenAddModal(false);
+          }}
+          form={formAdd} // Pass the form instance to the Form component
+        >
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: 'Please input name!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+              label="Age"
+              name="age"
+              rules={[
+                { 
+                  required: true, 
+                  message: 'Please input age!' 
+                },
+                {
+                  validator: (_, value) => {
+                    if (!value || Number.isNaN(value)) {
+                      return Promise.reject('Please input a valid number for age!');
+                    }
+                    const intValue = parseInt(value);
+                    if (intValue <= 0) {
+                      return Promise.reject('Age must be greater than 0');
+                    }
+                    if (!Number.isInteger(intValue)) {
+                      return Promise.reject('Age must be an integer!');
+                    }
+                    return Promise.resolve();
+                  },
+                }
+              ]}
+            >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[{ required: true, message: 'Please input address!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <div style={{ textAlign: 'center' }}>
+            <Button type="primary" htmlType="submit">
+              Thêm đơn hàng
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
       <Modal
         title="Update Employee"
         centered
@@ -243,56 +275,48 @@ const App = () => {
               handleSave(recordToUpdate.key, { ...recordToUpdate, ...values });
             }}
             initialValues={recordToUpdate}
-            form={form} // Pass the form instance to the Form component
+            form={formUpdate} // Pass the form instance to the Form component
           >
             <Form.Item
-              label="ID"
-              name="ID"
-              rules={[{ required: true, message: 'Please input ID!' }]}
+              label="Name"
+              name="name"
+              rules={[{ required: true, message: 'Please input name!' }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="DATE"
-              name="DATE"
-              rules={[{ required: true, message: 'Please input date!' }]}
+              label="Age"
+              name="age"
+              rules={[
+                { 
+                  required: true, 
+                  message: 'Please input age!' 
+                },
+                {
+                  validator: (_, value) => {
+                    if (!value || Number.isNaN(value)) {
+                      return Promise.reject('Please input a valid number for age!');
+                    }
+                    const intValue = parseInt(value);
+                    if (intValue <= 0) {
+                      return Promise.reject('Age must be greater than 0');
+                    }
+                    if (!Number.isInteger(intValue)) {
+                      return Promise.reject('Age must be an integer!');
+                    }
+                    return Promise.resolve();
+                  },
+                }
+              ]}
             >
-              <DatePicker format="DD/MM/YYYY" style={{width: '100%'}} />
-            </Form.Item>
+            <Input type="number" />
+          </Form.Item>
             <Form.Item
-              label="START_AT"
-              name="START_AT"
-              rules={[{ required: true, message: 'Please input start time!' }]}
+              label="Address"
+              name="address"
+              rules={[{ required: true, message: 'Please input address!' }]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
-              label="ARRIVAL_AT"
-              name="ARRIVAL_AT"
-              rules={[{ required: true, message: 'Please input arrival time!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="KILOMETER"
-              name="KILOMETER"
-              rules={[{ required: true, message: 'Please input kilometer!' }]}
-            >
-              <Input type="number" />
-            </Form.Item>
-            <Form.Item
-              label="COST"
-              name="COST"
-              rules={[{ required: true, message: 'Please input cost!' }]}
-            >
-              <Input type="number" />
-            </Form.Item>
-            <Form.Item
-              label="DATE/TIME"
-              name="DATE/TIME"
-              rules={[{ required: true, message: 'Please input date/time!' }]}
-            >
-              <DatePicker format="DD/MM/YYYY HH:mm"  style={{width: '100%'}}/>
             </Form.Item>
             <div style={{ textAlign: 'center' }}>
               <Button type="primary" htmlType="submit">
