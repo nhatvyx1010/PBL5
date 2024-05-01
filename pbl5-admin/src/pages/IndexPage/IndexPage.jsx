@@ -9,7 +9,8 @@ import {
   DotChartOutlined,
   ScheduleFilled,
   ShoppingCartOutlined,
-  QqOutlined
+  QqOutlined,
+  HomeOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import EmployeeComponent from '../../components/EmployeeComponent/EmployeeComponent';
@@ -18,6 +19,8 @@ import BookingInfoComponent from '../../components/BookingInfoComponent/BookingI
 import SimpleCalendar from '../../components/SimpleCalendarComponent/SimpleCalendarComponent';
 import CartComponent from '../../components/CartComponent/CartComponent';
 import StaffComponent from '../../components/StaffComponent/StaffComponent';
+import StatisticalComponent from '../../components/StatisticalComponent/StatisticalComponent';
+import CalendarComponent from '../../components/src/Calendar';
 
 const { Header, Sider, Content } = Layout;
 
@@ -26,13 +29,18 @@ const IndexPage: React.FC = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState('1');
 
   const handleMenuItemClick = (key: string) => {
-    setSelectedMenuItem(key);
+    if (key === 'home') {
+      // If HomeOutlined is clicked, set the selected menu item to '1'
+      setSelectedMenuItem('1');
+    } else {
+      setSelectedMenuItem(key);
+    }
   };
 
   const renderComponent = () => {
     switch (selectedMenuItem) {
       case '1':
-        return <EmployeeComponent />;
+        return <StatisticalComponent />;
       case '2':
         return <EmployeeComponent />;
       case '3':
@@ -42,7 +50,7 @@ const IndexPage: React.FC = () => {
       case '5':
         return <BookingInfoComponent />;
       case '6':
-        return <SimpleCalendar />;
+        return <CalendarComponent />;
       case '7':
         return <CartComponent />;
       case '8':
@@ -59,12 +67,14 @@ const IndexPage: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: '#CAF8F8' }}>
-        <div className="demo-logo-vertical" />
+        <div className="demo-logo-vertical" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '64px' }}>
+          <HomeOutlined style={{ fontSize: '16px', color: '#3C7363' }} onClick={() => handleMenuItemClick('home')} />
+        </div>
         <Menu
-          theme="light" // Đổi theme thành light
+          theme="light" // Change theme to light
           mode="inline"
           defaultSelectedKeys={['1']}
-          style={{ backgroundColor: '#CAF8F8' }} // Đổi màu nền của menu
+          style={{ backgroundColor: '#CAF8F8' }} // Change menu background color
           items={[
             {
               key: '1',
@@ -155,7 +165,7 @@ const IndexPage: React.FC = () => {
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            minHeight: '100vh', // Đặt chiều cao là 100vh
+            minHeight: '100vh', // Set height to 100vh
           }}
         >
            {renderComponent()}

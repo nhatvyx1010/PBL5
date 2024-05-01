@@ -192,11 +192,9 @@ const App = () => {
       render: (_, record) => (
         <div>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a>Delete</a>
+            <Button type="link">Delete</Button>
           </Popconfirm>
-          <a style={{ marginLeft: 8 }} onClick={() => handleUpdate(record)}>
-            Update
-          </a>
+          <Button style={{ marginLeft: 8 }} type="link" onClick={() => handleUpdate(record)}>Update</Button>
         </div>
       ),
     },
