@@ -138,7 +138,7 @@ const AddAppointment = ({ currentDate, openModal, setOpenModal }) => {
             setDisabled(true);
           }}
         >
-          Thêm lịch trình
+          Add Appointment
         </div>
       }
       open={openModal}
@@ -255,7 +255,7 @@ const AddAppointment = ({ currentDate, openModal, setOpenModal }) => {
         >
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button type="primary" htmlType="submit">
-            Thêm lịch trình
+              Submit
             </Button>
           </div>
         </Form.Item>

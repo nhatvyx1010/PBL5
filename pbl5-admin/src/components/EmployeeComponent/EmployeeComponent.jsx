@@ -158,36 +158,38 @@ const App = () => {
 
   const defaultColumns = [
     {
-      title: 'Tên',
+      title: 'name',
       dataIndex: 'name',
       width: '30%',
       editable: true,
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Tuổi',
+      title: 'age',
       dataIndex: 'age',
       sorter: (a, b) => a.age - b.age,
     },
     {
-      title: 'Địa chỉ',
+      title: 'address',
       dataIndex: 'address',
       sorter: (a, b) => a.address.localeCompare(b.address),
     },
     {
-      title: 'Ngày sinh',
+      title: 'date',
       dataIndex: 'date',
       render: (text, record) => moment(text).format('DD/MM/YYYY'),
     },
     {
-      title: '',
+      title: 'operation',
       dataIndex: 'operation',
       render: (_, record) => (
         <div>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <Button type="link">Delete</Button>
+            <a>Delete</a>
           </Popconfirm>
-          <Button style={{ marginLeft: 8 }} type="link" onClick={() => handleUpdate(record)}>Update</Button>
+          <a style={{ marginLeft: 8 }} onClick={() => handleUpdate(record)}>
+            Update
+          </a>
         </div>
       ),
     },
@@ -196,7 +198,7 @@ const App = () => {
   return (
     <div>
       <Button type="primary" onClick={() => setOpenAddModal(true)} style={{ marginBottom: '20px' }}>
-        Thêm khách hàng
+        Add Employee
       </Button>
       <Modal
         title="Add Employee"
@@ -265,7 +267,7 @@ const App = () => {
 
           <div style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit">
-            Thêm khách hàng
+              Add Employee
             </Button>
           </div>
         </Form>
