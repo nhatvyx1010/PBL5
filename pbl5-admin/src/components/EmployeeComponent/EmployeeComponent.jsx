@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form, Input, Popconfirm, Table, Modal, DatePicker } from 'antd';
 import moment from 'moment'; // Import moment for date manipulation
+import PropTypes from 'prop-types'; // Import PropTypes for props validation
 
 const EditableContext = React.createContext(null);
 
-const EditableRow = ({ index, ...props }) => {
+const EditableRow = ({ ...props }) => {
   const [form] = Form.useForm();
   return (
     <Form form={form} component={false}>
@@ -13,6 +14,10 @@ const EditableRow = ({ index, ...props }) => {
       </EditableContext.Provider>
     </Form>
   );
+};
+
+EditableRow.propTypes = {
+  index: PropTypes.number.isRequired,
 };
 
 const EditableCell = ({
@@ -85,6 +90,15 @@ const EditableCell = ({
   }
 
   return <td {...restProps}>{childNode}</td>;
+};
+
+EditableCell.propTypes = {
+  title: PropTypes.string,
+  editable: PropTypes.bool,
+  children: PropTypes.node,
+  dataIndex: PropTypes.string,
+  record: PropTypes.object,
+  handleSave: PropTypes.func,
 };
 
 const App = () => {
@@ -177,7 +191,7 @@ const App = () => {
     {
       title: 'date',
       dataIndex: 'date',
-      render: (text, record) => moment(text).format('DD/MM/YYYY'),
+      render: (text) => moment(text).format('DD/MM/YYYY'),
     },
     {
       title: 'operation',

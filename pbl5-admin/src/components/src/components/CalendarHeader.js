@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import React, { useContext } from "react";
 import logo from "../assets/logo.png";
 import GlobalContext from "../context/GlobalContext";
-import {BackwardOutlined, ForwardOutlined} from '@ant-design/icons';
+import { ForwardOutlined, BackwardOutlined } from '@ant-design/icons';
 
 export default function CalendarHeader() {
   const { monthIndex, setMonthIndex } = useContext(GlobalContext);
@@ -19,6 +19,9 @@ export default function CalendarHeader() {
         : dayjs().month()
     );
   }
+
+  
+const iconStyle = { fontSize: '20px', marginRight: '20px' };
   return (
     <header className="px-4 py-2 flex items-center">
       <img src={logo} alt="calendar" className="mr-2 w-12 h-12" />
@@ -32,10 +35,10 @@ export default function CalendarHeader() {
         Today
       </button>
       <button onClick={handlePrevMonth}>
-        <BackwardOutlined style={{fontSize: '20px', marginRight: '10px'}} />
+        <BackwardOutlined style={iconStyle} />
       </button>
       <button onClick={handleNextMonth}>
-        <ForwardOutlined style={{fontSize: '20px'}} />
+        <ForwardOutlined style={iconStyle}/>
       </button>
       <h2 className="ml-4 text-xl text-gray-500 font-bold">
         {dayjs(new Date(dayjs().year(), monthIndex)).format(
@@ -45,3 +48,6 @@ export default function CalendarHeader() {
     </header>
   );
 }
+
+
+

@@ -1,34 +1,68 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import ReactEcharts from "echarts-for-react";
-import Select from 'react-select';
+import { useEffect } from "react";
+import { useSelector } from 'react-redux';
 
-export default class CalculationCharts extends Component {
-    state = {
-        selectedOption: null, // Lựa chọn hãng được chọn
-        data: {
-            'Doanh thu bán được': 1500, // Giả sử doanh thu bán được là 1500 triệu VND
-            'Doanh thu chưa bán được': 500 // Giả sử doanh thu chưa bán được là 500 triệu VND
-        },
-        saleData: {
-            'Vé bán được': 6000, // Giả sử có 6000 vé bán được
-            'Vé chưa bán được': 4000 // Giả sử có 4000 vé chưa bán được
-        },
-        providerData: {
-            'Nhà cung cấp A': 1200, // Giả sử có 6000 vé bán được
-            'Nhà cung cấp B': 800, // Giả sử có 6000 vé bán được
-            'Nhà cung cấp C': 300, // Giả sử có 6000 vé bán được
-            'Nhà cung cấp D': 50, // Giả sử có 6000 vé bán được
-            'Nhà cung cấp E': 1500, // Giả sử có 6000 vé bán được
-            'Nhà cung cấp F': 1100, // Giả sử có 6000 vé bán được
+const StatisticalComponent = () => {
+    const [soldSeatsData, setSoldSeatsData] = useState({});
+    const [revenueData, setRevenueData] = useState({});
+    const user = useSelector(state => state.user);
+    
+    useEffect(() => {
+        // Fetch sold seats data
+        fetchSoldSeatsData();
+        
+        // Fetch revenue data
+        fetchRevenueData();
+    }, []);
 
+    
+    const fetchSoldSeatsData = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/percent-users-buy`, {
+                headers: {
+                    'Authorization': `Bearer ${user.access_token}`,
+                    'Content-Type': 'application/json' // Assuming your API expects JSON data
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch sold seats data');
+            }
+            const data = await response.json();
+            setSoldSeatsData(data.data.result);
+            console.log("percent-users-buy: "+ data.data.result);
+        } catch (error) {
+            console.error('Error fetching sold seats data:', error);
+        }
+    };
+    
+    const fetchRevenueData = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/total-revenue`, {
+                headers: {
+                    'Authorization': `Bearer ${user.access_token}`,
+                    'Content-Type': 'application/json' // Assuming your API expects JSON data
+                }
+            });
+            const data = await response.json();
+            setRevenueData(data.data.result);
+            console.log(data.data.result);
+        } catch (error) {
+            console.error('Error fetching revenue data:', error);
         }
     };
 
-    handleChange = selectedOption => {
-        this.setState({ selectedOption });
-    };
+    // const [selectedOption, setSelectedOption] = useState(null);
+    const [data] = useState({
+        'Doanh thu bán được': 1500,
+        'Doanh thu chưa bán được': 500
+    });
+    const [saleData] = useState({
+        'Vé bán được': 6000,
+        'Vé chưa bán được': 4000
+    });
 
-    getOption2 = () => {
+    const getOption2 = () => {
         let option2 = {
             tooltip: {
                 trigger: 'axis',
@@ -57,14 +91,13 @@ export default class CalculationCharts extends Component {
             ],
             series: [
                 {
-                    type: 'bar',
+                    type: 'line', // Thay đổi type từ 'bar' sang 'line'
                     emphasis: {
                         focus: 'series'
                     },
-                    barWidth: '40%',
                     itemStyle: {
                         normal: {
-                            color: '#0CC4B6' // Màu của các cột
+                            color: '#0CC4B6' // Màu của đường
                         }
                     },
                     data: [120, 132, 101, 134, 90, 230, 210, 220, 182, 191, 234, 290] // Dữ liệu doanh thu theo tháng
@@ -73,10 +106,8 @@ export default class CalculationCharts extends Component {
         };
         return option2;
     };
-
-    getOption3 = () => {
-        const { selectedOption, data } = this.state;
     
+    const getOption3 = () => {
         let option3 = {
             tooltip: {
                 trigger: 'item',
@@ -89,17 +120,14 @@ export default class CalculationCharts extends Component {
             },
             series: [
                 {
-                    name: 'Biểu đồ phần trăm tổng doanh thu năm 2023',
+                    name: 'Biểu đồ phần trăm vé bán được',
                     type: 'pie',
                     radius: '75%', // Thay đổi giá trị radius để làm cho biểu đồ lớn hơn
                     center: ['50%', '60%'],
-                    data: Object.keys(data).map(key => ({
-                        value: data[key],
-                        name: key,
-                        itemStyle: {
-                            color: key === 'Doanh thu bán được' ? '#0CC4B6' : '#FF6F61' // Điều chỉnh màu sắc
-                        }
-                    })),
+                    data: [
+                        { value: soldSeatsData.sold || 0, name: 'Vé bán được' },
+                        { value: soldSeatsData.available || 0, name: 'Vé chưa bán được' }
+                    ],
                     emphasis: {
                         itemStyle: {
                             shadowBlur: 10,
@@ -114,9 +142,7 @@ export default class CalculationCharts extends Component {
         return option3;
     };
     
-    getOption4 = () => {
-        const { selectedOption, saleData } = this.state;
-    
+    const getOption4 = () => {
         let option4 = {
             tooltip: {
                 trigger: 'item',
@@ -129,17 +155,14 @@ export default class CalculationCharts extends Component {
             },
             series: [
                 {
-                    name: 'Biểu đồ phần trăm bán vé năm 2023',
+                    name: 'Biểu đồ lợi nhuận trên tổng phần trăm doanh thu',
                     type: 'pie',
                     radius: '75%', // Thay đổi giá trị radius để làm cho biểu đồ lớn hơn
                     center: ['50%', '50%'], // Đặt biểu đồ ở giữa
-                    data: Object.keys(saleData).map((key, index) => ({
-                        value: saleData[key],
-                        name: key,
-                        itemStyle: {
-                            color: `rgba(0, 0, 255, ${0.2 + index * 0.2})` // Điều chỉnh màu sắc
-                        }
-                    })),
+                    data: [
+                    { value: revenueData.revenue || 0, name: 'Lợi nhuận' },
+                    { value: (revenueData.total - revenueData.revenue) || 0, name: 'Chi phí' }
+                    ],
                     emphasis: {
                         itemStyle: {
                             shadowBlur: 10,
@@ -153,63 +176,24 @@ export default class CalculationCharts extends Component {
     
         return option4;
     };
-    getOption5 = () => {
-        const { providerData } = this.state;
-    
-        let option5 = {
-            tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: Object.keys(providerData)
-            },
-            series: [
-                {
-                    name: 'Biểu đồ phần trăm vé bán được theo nhà cung cấp năm 2023',
-                    type: 'pie',
-                    radius: '75%', // Thay đổi giá trị radius để làm cho biểu đồ lớn hơn
-                    center: ['50%', '50%'], // Đặt biểu đồ ở giữa
-                    data: Object.keys(providerData).map((key, index) => ({
-                        value: providerData[key],
-                        name: key,
-                        itemStyle: {
-                            color: `rgba(255, 0, 0, ${0.2 + index * 0.1})` // Điều chỉnh màu sắc
-                        }
-                    })),
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-    
-        return option5;
-    };
-    
-    
-    
 
-    render() {
-        const { selectedOption } = this.state;
+    return (
+        <>
+            <p style={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: '25px' }}>Biểu đồ phần trăm vé bán được</p>
+            <ReactEcharts style={{ marginTop: '10px' }} option={getOption2()} />
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ flex: 1 }}>
+                    <p style={{ fontWeight: 'bold', fontSize: '25px', textAlign: 'center' }}>Biểu đồ phần trăm bán vé</p>
+                    <ReactEcharts style={{ marginTop: '10px' }} option={getOption3()} />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <p style={{ fontWeight: 'bold', fontSize: '25px', textAlign: 'center' }}>Biểu đồ lợi nhuận trên tổng phần trăm doanh thu</p>
+                    <ReactEcharts style={{ marginTop: '10px' }} option={getOption4()} />
+                </div>
+            </div>
+        </>
+    );
+};
 
-        return (
-            <>
-                <p style={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: '25px' }}>Biểu đồ doanh thu năm 2023</p>
-                <ReactEcharts style={{ marginTop: '10px' }} option={this.getOption2()} />
-                <p style={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: '25px' }}>Biểu đồ phần trăm tổng doanh thu năm 2023</p>
-                <ReactEcharts style={{ marginTop: '10px' }} option={this.getOption3()} />
-                <p style={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: '25px' }}>Biểu đồ phần trăm bán vé năm 2023</p>
-                <ReactEcharts style={{ marginTop: '10px' }} option={this.getOption4()} />
-                <p style={{ display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: '25px' }}>Biểu đồ phần trăm vé bán được theo nhà cung cấp năm 2023</p>
-                <ReactEcharts style={{ marginTop: '10px' }} option={this.getOption5()} />
-            </>
-        )
-    }
-}
+export default StatisticalComponent;

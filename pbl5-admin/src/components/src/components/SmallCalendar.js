@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 import { getMonth } from "../util";
-import {BackwardOutlined, ForwardOutlined} from '@ant-design/icons';
+import { ForwardOutlined, BackwardOutlined } from '@ant-design/icons';
 
 export default function SmallCalendar() {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(
@@ -43,6 +43,8 @@ export default function SmallCalendar() {
       return "";
     }
   }
+
+  const iconStyle = { fontSize: '20px', marginRight: '20px' };
   return (
     <div className="mt-9">
       <header className="flex justify-between">
@@ -53,10 +55,10 @@ export default function SmallCalendar() {
         </p>
         <div>
           <button onClick={handlePrevMonth}>
-            <BackwardOutlined style={{fontSize: '20px', marginRight: '10px'}} />
+            <BackwardOutlined style={iconStyle} />
           </button>
           <button onClick={handleNextMonth}>
-            <ForwardOutlined style={{fontSize: '20px'}} />
+            <ForwardOutlined style={iconStyle}/>
           </button>
         </div>
       </header>
@@ -86,3 +88,7 @@ export default function SmallCalendar() {
     </div>
   );
 }
+
+
+
+

@@ -1,8 +1,7 @@
-import React from "react";
-import { Button, Col } from 'antd';
+import { Col } from 'antd';
 import { Link } from 'react-router-dom'; 
-import { LogoImage, Navigation, NavigationItem, WrapperHeader, LogButton } from "./style";
-import logoImage from '../../assets/images/logo.png';
+import { Navigation, NavigationItem, WrapperHeader, LogButton } from "./style";
+// import logoImage from '../../assets/images/logo.png';
 import {useNavigate} from 'react-router-dom'
 
 const HeaderComponent = () => {
@@ -27,7 +26,6 @@ const HeaderComponent = () => {
             <WrapperHeader>
                 <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Link to="/"> 
-                        <LogoImage src={logoImage} alt="Logo" />
                     </Link> 
                 </Col>
                 <Col span={14} > 

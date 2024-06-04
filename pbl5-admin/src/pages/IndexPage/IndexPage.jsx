@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -8,45 +8,85 @@ import {
   InfoCircleFilled,
   DotChartOutlined,
   ScheduleFilled,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  HomeOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-import EmployeeComponent from '../../components/EmployeeComponent/EmployeeComponent';
+import StatisticalComponent from '../../components/StatisticalComponent/StatisticalComponent';
+import CustomerComponent from '../../components/CustomerComponent/CustomerComponent';
+// import EmployeeComponent from '../../components/EmployeeComponent/EmployeeComponent';
 import ProviderComponent from '../../components/ProviderComponent/ProviderComponent';
 import BookingInfoComponent from '../../components/BookingInfoComponent/BookingInfoComponent';
-import SimpleCalendar from '../../components/SimpleCalendarComponent/SimpleCalendarComponent';
-// import BookingInfoComponent from './SupplierComponent';
-// import TicketInfoComponent from './TicketInfoComponent';
-// import ScheduleComponent from './ScheduleComponent';
-// import OrderComponent from './OrderComponent';
-// import LogoutComponent from './LogoutComponent';
+import OrderListComponent from '../../components/OrderListComponent/OrderListComponent.jsx';
+import ScheduleRequest from '../../components/ScheduleRequest/ScheduleRequest';
+import CalendarComponent from '../../components/CalendarComponent/CalendarComponent';
+import CalendarComponentList from '../../components/CalendarComponentList/CalendarComponentList';
+import StationComponent from '../../components/StationComponent/StationComponent';
+import TrainComponent from '../../components/TrainComponent/TrainComponent';
+import ChatComponent from '../../components/testChatComponent/chatComponent';
+import { useNavigate } from "react-router-dom";
+import { updateUser } from '../../redux/slides/userSlide.js';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { Header, Sider, Content } = Layout;
 
-const IndexPage: React.FC = () => {
+const IndexPage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState('1');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleMenuItemClick = (key: string) => {
+  const user = useSelector(state => state.user);
+
+  useEffect(() => {
+    if(!user.access_token){
+      navigate('/')
+    }
+  }, [user.access_token, navigate]);
+
+  const handleLogout = () => {
+    dispatch(updateUser({
+        name: '',
+        email: '',
+        access_token: '',
+        address: '',
+        phone: '',
+        avatar: ''
+    }));
+    navigate("/");
+};
+
+  const handleMenuItemClick = (key) => {
     setSelectedMenuItem(key);
+    if (key === '11') {
+      handleLogout(); 
+    }
   };
 
   const renderComponent = () => {
     switch (selectedMenuItem) {
       case '1':
-        return <EmployeeComponent />;
+        return <StatisticalComponent />;
       case '2':
-        return <EmployeeComponent />;
+        return <CustomerComponent />;
       case '3':
         return <ProviderComponent />;
       case '4':
-        return <BookingInfoComponent />;
+        return <StationComponent />;
       case '5':
-        return <SimpleCalendar />;
+        return <TrainComponent />;
       case '6':
-        return <EmployeeComponent />;
+        return <BookingInfoComponent />;
       case '7':
-        return <EmployeeComponent />;
+          return <CalendarComponentList />;
+      case '8':
+          return <CalendarComponent />;
+      case '9':
+        return <OrderListComponent />;
+      case '10':
+        return <ScheduleRequest />;
+      case '12':
+        return <ChatComponent />;
       default:
         return null;
     }
@@ -59,7 +99,9 @@ const IndexPage: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: '#CAF8F8' }}>
-        <div className="demo-logo-vertical" />
+        <div className="demo-logo-vertical" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '64px' }}>
+          <HomeOutlined style={{ fontSize: '16px', color: '#3C7363' }} onClick={() => handleMenuItemClick('home')} />
+        </div>
         <Menu
           theme="light" // Đổi theme thành light
           mode="inline"
@@ -93,13 +135,37 @@ const IndexPage: React.FC = () => {
             {
               key: '4',
               icon: <InfoCircleFilled />,
-              label: 'Thông tin đặt vé',
+              label: 'Station',
               style: { 
                 fontWeight: 500,
               }
             },
             {
               key: '5',
+              icon: <InfoCircleFilled />,
+              label: 'Train',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '6',
+              icon: <InfoCircleFilled />,
+              label: 'Thông tin đặt vé',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '7',
+              icon: <ScheduleFilled />,
+              label: 'Danh sách lịch trình',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '8',
               icon: <ScheduleFilled />,
               label: 'Lịch trình',
               style: { 
@@ -107,7 +173,7 @@ const IndexPage: React.FC = () => {
               }
             },
             {
-              key: '6',
+              key: '9',
               icon: <ShoppingCartOutlined />,
               label: 'Đơn hàng',
               style: { 
@@ -115,9 +181,25 @@ const IndexPage: React.FC = () => {
               }
             },
             {
-              key: '7',
+              key: '10',
+              icon: <ScheduleFilled />,
+              label: 'Đăng ký lịch trình',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '11',
               icon: <LogoutOutlined />,
               label: 'Đăng xuất',
+              style: { 
+                fontWeight: 500,
+              }
+            },
+            {
+              key: '12',
+              icon: <LogoutOutlined />,
+              label: 'chat',
               style: { 
                 fontWeight: 500,
               }
@@ -147,7 +229,7 @@ const IndexPage: React.FC = () => {
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            minHeight: '100vh', // Đặt chiều cao là 100vh
+            maxHeight: '85vh', // Đặt chiều cao là 100vh
           }}
         >
            {renderComponent()}
