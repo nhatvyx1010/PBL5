@@ -167,6 +167,9 @@ export const MainContainerStyle = styled.div`
     border: 7px solid #CAF8F8;
     backdrop-filter: blur(2px);
     border-radius: 50px;
+
+    display: flex;
+    flex-direction: column; /* Thiết lập flex-direction thành column */
 `;
 
 export const InnerDivStyle = styled.div`
@@ -179,6 +182,18 @@ export const InnerDivStyle = styled.div`
     background: #FFFFFF;
     border-radius: 10px;
 `;
+
+export const WrapBorder = styled.div`
+    box-sizing: border-box;
+    position: absolute;
+    width: 767px;
+    height: 187px;
+    left: 27px;
+    top: 230px; /* Thay đổi top để không trùng với InnerDivStyle */
+    background: #FFFFFF;
+    border-radius: 10px;
+`;
+
 
 export const AutoLayoutContainerStyle = styled.div`
     display: flex;

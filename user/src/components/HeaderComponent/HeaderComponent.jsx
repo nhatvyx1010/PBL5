@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Col } from 'antd';
+import { Col } from 'antd';
 import { Link } from 'react-router-dom'; 
 import { LogoImage, Navigation, NavigationItem, WrapperHeader, LogButton } from "./style";
 import logoImage from '../../assets/images/logo.png';

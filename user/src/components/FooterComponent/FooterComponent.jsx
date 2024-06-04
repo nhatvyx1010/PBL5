@@ -1,9 +1,34 @@
-import React from "react";
 import { Button } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 const FooterComponent = () => {
+    const navigate = useNavigate();
+
+    const handleInstruct = () => {
+        navigate('/instruct')
+    }
+    const handleBlog = () => {
+        navigate('/blog')
+    }
+    const handleRegulations = () => {
+        navigate('/regulations')
+    }
+    const handleAboutMe = () => {
+        navigate('/aboutme')
+    }
+    const handleRules = () => {
+        navigate('/rules')
+    }
+    const handlePolicy = () => {
+        navigate('/policy')
+    }
+    const handleQuestion = () => {
+        navigate('/questions')
+    }
+
     return (
-        <div style={{ width: '97.4%', marginTop: '30px', backgroundColor: '#31294C', padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+       
+            <div style={{ width: '97.4%', marginTop: '30px', backgroundColor: '#31294C', padding: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 <div style={{ flex: '0 0 auto', width: '32%', marginRight: '1%' }}>
                     <h2 style={{ fontSize: '15px', color: 'grey' }}>Thông tin liên hệ</h2>
                     <p style={{ fontSize: '16px', color: 'white' }}>Công ty TNHH Du Lịch và Dịch Vụ ViVu</p>
@@ -15,17 +40,17 @@ const FooterComponent = () => {
 
                 <div style={{ flex: '0 0 auto', width: '32%', marginRight: '1%' }}>
                     <h2 style={{ fontSize: '15px', color: 'grey' }}>Giới thiệu</h2>
-                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Về chúng tôi</Button>
-                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Điều khoản và điều kiện</Button>
-                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Chính sách riêng tư</Button>
-                    <Button type="text" style={{ color: 'white' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Hướng dẫn sử dụng</Button>
+                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleAboutMe}>Về chúng tôi</Button>
+                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleRules}>Điều khoản và điều kiện</Button>
+                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handlePolicy}>Chính sách riêng tư</Button>
+                    <Button type="text" style={{ color: 'white' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleInstruct}>Hướng dẫn sử dụng</Button>
                 </div>
 
                 <div style={{ flex: '0 0 auto', width: '32%' }}>
                     <h2 style={{ fontSize: '15px', color: 'grey' }}>Tàu</h2>
-                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Blog</Button>
-                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Quy định chung</Button>
-                    <Button type="text" style={{ color: 'white' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'}>Các câu hỏi thường gặp</Button>
+                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleBlog}>Blog</Button>
+                    <Button type="text" style={{ color: 'white', marginBottom: '10px' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleRegulations}>Quy định chung</Button>
+                    <Button type="text" style={{ color: 'white' }} onMouseEnter={e => e.target.style.fontWeight = 'bold'} onMouseLeave={e => e.target.style.fontWeight = 'normal'} onClick={handleQuestion}>Các câu hỏi thường gặp</Button>
                 </div>
             </div>
 

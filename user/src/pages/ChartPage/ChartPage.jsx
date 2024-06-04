@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactEcharts from "echarts-for-react"
 
 export default class CalculationCharts extends Component {

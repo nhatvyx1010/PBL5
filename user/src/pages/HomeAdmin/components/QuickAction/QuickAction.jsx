@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, LayoutFilled, MailFilled, TableOutlined, PicCenterOutlined } from '@ant-design/icons';
+import { LayoutFilled, MailFilled, TableOutlined, PicCenterOutlined } from '@ant-design/icons';
 import './QuickAction.css';
 
 function QuickAction() {

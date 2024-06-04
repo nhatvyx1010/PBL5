@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Form, Input, Button, Select } from 'antd';
 const { Option } = Select;
 const layout = {

@@ -1,22 +1,10 @@
-import React, { useState } from "react";
-import { Container, Footer, Wrapper, WrapperIcon, WrapperTitle } from "./style";
-import { CaretRightOutlined  } from '@ant-design/icons';
+import { Container, Wrapper, WrapperIcon, WrapperTitle } from "./style";
+import { CaretRightOutlined } from '@ant-design/icons';
 import bgFb from '../../assets/images/bg_full.jpg';
-import { Button, Collapse, theme } from 'antd';
-import { useNavigate } from "react-router-dom";
+import { Collapse, theme } from 'antd';
+// import FooterComponent from '../../components/FooterComponent/FooterComponent';
 
 const RegulationsPage = () => {
-    const [expandStates, setExpandStates] = useState({
-        item1: true,
-        item2: true,
-    });
-
-    const toggleExpand = (itemName) => {
-        setExpandStates(prevState => ({
-            ...prevState,
-            [itemName]: !prevState[itemName]
-        }));
-    };
         const comments = [
             "Mixivivu.com là sản phẩm chính thức của Công ty TNHH Du lịch và dịch vụ Mixi Vivu. Với niềm đam mê du lịch, ưa khám phá, chúng tôi đã cùng nhau xây dựng một website – nơi mà khách hàng sẽ dễ dàng lựa chọn cho mình cũng như những người thân yêu chuyến nghỉ dưỡng đáng nhớ. Mixi Vivu chọn lọc các du thuyền, khách sạn và liên kết với các hãng hàng không nhằm cung cấp những dịch vụ đa dạng và tốt nhất cho du khách.",
             "Chúng tôi mong muốn du khách tận hưởng các dịch vụ du lịch chất lương bằng sự trải nghiệm thực tế của chính đội ngũ của Mixi Vivu. Các video về du thuyền, khách sạn hay những chuyến bay mà chúng tôi đã ghi lại cũng sẽ được chúng tôi giới thiệu tới du khách. Chính từ những hình ảnh này, quý khách có thể chọn lựa cho mình hay gia đình, bạn bè, đồng nghiệp những chuyến đi ý nghĩa nhất. Chúng tôi chắc chắn sẽ mang lại cho du khách những kỳ nghĩ đáng nhớ với:",
@@ -38,118 +26,98 @@ const RegulationsPage = () => {
             "Điện thoại: 0922222016",
             "Địa chỉ email: info@vivu.com",
         ];
-        const getItems = (panelStyle) => [
-            {
-                key: '1',
-                label: '1. Chúng tôi là ViVu',
-                children: <p style={{ fontWeight: 'normal' }}>{comments[0]}</p>,
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+
+    const getItems = (panelStyle) => [
+        {
+            key: '1',
+            label: '1. Chúng tôi là ViVu',
+            children: <p key="1" style={{ fontWeight: 'normal' }}>{comments[0]}</p>,
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-            
-            
-            {
-                key: '2',
-                label: '2. Tại sao chọn chúng tôi?',
-                children: [
-                    <p style={{ fontWeight: 'normal' }}>{comments[1]}</p>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[2]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[3]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[4]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[5]}</li></ul>,
-                ],
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+        },
+        {
+            key: '2',
+            label: '2. Tại sao chọn chúng tôi?',
+            children: [
+                <p key="2_1" style={{ fontWeight: 'normal' }}>{comments[1]}</p>,
+                <ul key="2_2" style={{ fontWeight: 'normal' }}><li>{comments[2]}</li></ul>,
+                <ul key="2_3" style={{ fontWeight: 'normal' }}><li>{comments[3]}</li></ul>,
+                <ul key="2_4" style={{ fontWeight: 'normal' }}><li>{comments[4]}</li></ul>,
+                <ul key="2_5" style={{ fontWeight: 'normal' }}><li>{comments[5]}</li></ul>,
+            ],
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-            {
-                key: '3',
-                label: '3. Sản phẩm dịch vụ',
-                children: [
-                    <p style={{ fontWeight: 'normal' }}>{comments[6]}</p>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[7]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[8]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[9]}</li></ul>,
-                    <p style={{ fontWeight: 'normal' }}>{comments[10]}</p>,
-                ],
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+        },{
+            key: '3',
+            label: '3. Sản phẩm dịch vụ',
+            children: [
+                <p key="3_1" style={{ fontWeight: 'normal' }}>{comments[6]}</p>,
+                <ul key="3_2" style={{ fontWeight: 'normal' }}><li>{comments[7]}</li></ul>,
+                <ul key="3_3" style={{ fontWeight: 'normal' }}><li>{comments[8]}</li></ul>,
+                <ul key="3_4" style={{ fontWeight: 'normal' }}><li>{comments[9]}</li></ul>,
+                <p key="3_5" style={{ fontWeight: 'normal' }}>{comments[10]}</p>,
+            ],
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-            {
-                key: '4',
-                label: '4. Liên hệ với chúng tôi',
-                children: [
-                    <h1 style={{fontSize: '17px'}}>{comments[11]}</h1>,
-                    <h3 style={{ fontWeight: 'normal'}}>{comments[12]}</h3>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[13]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[14]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[15]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[16]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[17]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[13]}</li></ul>,
-                ],
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+        },
+        {
+            key: '4',
+            label: '4. Liên hệ với chúng tôi',
+            children: [
+                <h1 key="4_1" style={{ fontSize: '17px' }}>{comments[11]}</h1>,
+                <h3 key="4_2" style={{ fontWeight: 'normal' }}>{comments[12]}</h3>,
+                <ul key="4_3" style={{ fontWeight: 'normal' }}><li>{comments[13]}</li></ul>,
+                <ul key="4_4" style={{ fontWeight: 'normal' }}><li>{comments[14]}</li></ul>,
+                <ul key="4_5" style={{ fontWeight: 'normal' }}><li>{comments[15]}</li></ul>,
+                <ul key="4_6" style={{ fontWeight: 'normal' }}><li>{comments[16]}</li></ul>,
+                <ul key="4_7" style={{ fontWeight: 'normal' }}><li>{comments[17]}</li></ul>,
+                <ul key="4_8" style={{ fontWeight: 'normal' }}><li>{comments[13]}</li></ul>,
+            ],
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-        ];
+        },
+    ];
+
     const { token } = theme.useToken();
     const panelStyle = {
-      marginBottom: 24,
-      background: token.colorBgContainer,
-      borderRadius: '20px',
-      border: '3px solid #CAF8F8',
-
+        marginBottom: 24,
+        background: token.colorBgContainer,
+        borderRadius: '20px',
+        border: '3px solid #CAF8F8',
     };
-    const navigate = useNavigate();
-    const handleInstruct = () => {
-        navigate('/instruct')
-    }
-    const handleBlog = () => {
-        navigate('/blog')
-    }
-    const handleRegulations = () => {
-        navigate('/regulations')
-    }
-    const handleAboutMe = () => {
-        navigate('/aboutme')
-    }
-    const handleRules = () => {
-        navigate('/rules')
-    }
-    const handlePolicy = () => {
-        navigate('/policy')
-    }
-    const handleQuestion = () => {
-        navigate('/questions')
-    }
+
     return (
-        <div style={{ backgroundImage: `url(${bgFb})`, backgroundSize: 'cover', height: '700px' }}>
-            <Container>
-                <Wrapper>
-                    <WrapperTitle>Về chúng tôi</WrapperTitle>
-                    <WrapperIcon>`````````````</WrapperIcon>
-                </Wrapper>
-                <Collapse
-                    bordered={false}
-                    defaultActiveKey={['0']}
-                    expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-                    style={{
-                        background: token.colorBgContainer,
-                        width: '100%',
-                    }}
-                    items={getItems(panelStyle)}
-                />
-            </Container>
+        <div >
+            <div style={{ backgroundImage: `url(${bgFb})`, backgroundSize: 'cover'}}>
+                <Container>
+                    <Wrapper>
+                        <WrapperTitle>Về chúng tôi</WrapperTitle>
+                        <WrapperIcon>`````````````</WrapperIcon>
+                    </Wrapper>
+                    <Collapse
+                        bordered={false}
+                        defaultActiveKey={['0']}
+                        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                        style={{
+                            background: token.colorBgContainer,
+                            width: '100%',
+                        }}
+                        items={getItems(panelStyle)}
+                    />
+                </Container>
+            </div>
+            {/* <FooterComponent/> */}
+
         </div>
-    )
+    );
 }
 
 export default RegulationsPage;
-

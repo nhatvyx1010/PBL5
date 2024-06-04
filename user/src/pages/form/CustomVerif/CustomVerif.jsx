@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { SmileOutlined } from '@ant-design/icons';
 import {
   Form,

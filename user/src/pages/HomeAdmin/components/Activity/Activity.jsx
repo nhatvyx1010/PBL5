@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import * as echarts from 'echarts';
 export default class Active extends Component {
     initChart = () => {

@@ -19,6 +19,7 @@ import ChartPage  from "../pages/ChartPage/ChartPage";
 import BasicForm from "../pages/form/BasicForm/BasicForm";
 import customVerif from "../pages/form/CustomVerif/CustomVerif";
 import HomeAdmin from "../pages/HomeAdmin/HomeAdmin";
+import PersonalPage from "../pages/PersonalPage/PersonalPage";
 
 
 export const routes = [
@@ -121,6 +122,11 @@ export const routes = [
         path: '/homeadmin',
         page: HomeAdmin,
         isShowHeader: false
+    },
+    {
+        path: '/personal',
+        page: PersonalPage,
+        isShowHeader: true
     },
     {
         path: '*',

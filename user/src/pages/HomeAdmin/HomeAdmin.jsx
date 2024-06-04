@@ -1,8 +1,4 @@
-import React, { Component } from 'react'
-import Visits from './components/Visits/Visits'
-import VisitsInfo from './components/VisitsInfo/VisitsInfo'
-import Active from './components/Activity/Activity'
-import QuickAction from './components/QuickAction/QuickAction'
+import { Component } from 'react'
 
 import './homeadmin.css'
 export default class Home extends Component {

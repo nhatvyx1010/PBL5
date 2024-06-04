@@ -1,71 +1,59 @@
-import React, { useState } from "react";
-import { Container, NavigateItem, Navigation, Wrapper, WrapperContent, WrapperIcon, WrapperText, WrapperTitle } from "./style";
-import { MinusOutlined, PlusOutlined, CaretRightOutlined  } from '@ant-design/icons';
+import { Container, Wrapper, WrapperIcon, WrapperTitle } from "./style";
+import { CaretRightOutlined } from '@ant-design/icons';
 import bgFb from '../../assets/images/bg_full.jpg';
 import { Collapse, theme } from 'antd';
 
 const RegulationsPage = () => {
-    const [expandStates, setExpandStates] = useState({
-        item1: true,
-        item2: true,
-    });
+    const comments = [
+        "Quý khách vui lòng có mặt tại bến tàu trước thời gian khởi hành ít nhất là 30 phút để thực hiện các thủ tục cần thiết trước khi lên tàu.",
+        "Quý khách vui lòng đặt vé ít nhất 24 giờ trước thời gian khởi hành của tàu. Điều này giúp đảm bảo rằng chỗ của quý khách được xác nhận và tiện lợi cho việc tổ chức lịch trình du lịch.",
+        "Đối với người lớn: Quý khách vui lòng cung cấp thông tin chính xác về CMND (Chứng minh nhân dân) hoặc hộ chiếu khi mua vé.",
+        "Đối với trẻ em dưới 14 tuổi: Quý khách vui lòng cung cấp thông tin chính xác về Giấy khai sinh hoặc hộ chiếu khi mua vé.",
+        "Những thông tin trên cần được cung cấp khi mua vé và sẽ được sử dụng trong quá trình thực hiện thủ tục lên tàu.",
+    ];
 
-    const toggleExpand = (itemName) => {
-        setExpandStates(prevState => ({
-            ...prevState,
-            [itemName]: !prevState[itemName]
-        }));
-    };
-        const comments = [
-            "Giờ nhận phòng từ 12h15-12h30. Nếu quý khách không sủ dụng dịch vụ xe đưa đón của tàu và tự di chuyển, vui lòng có mặt tại bến tàu muộn nhất là 11h45 để làm thủ tục trước khi lên tàu.",
-            "Giờ trả phòng từ 9h30-10h30 tùy thuộc vào lịch trình của tàu. Sau khi trả phòng, quý khách sẽ được phục vụ bữa trưa trên tàu trước khi tàu cập bến.",
-            "Đối với người lớn: quý khách vui lòng gửi ảnh chụp CCCD hoặc CMT hoặc Hộ chiếu.",
-            "Đối với trẻ em dưới 14 tuổi: quý khách vui lòng gửi ảnh chụp Giấy khai sinh hoặc Hộ chiếu.",
-            "Những giấy tờ trên, quý khách vui lòng gửi trước ít nhất 03 ngày trước khi đi tàu và sẽ được yêu cầu xuất trình khi làm thủ tục lên tàu.",
-        ];
-        const getItems = (panelStyle) => [
-            {
-                key: '1',
-                label: 'Thời gian nhận phòng',
-                children: <p style={{ fontWeight: 'normal' }}>{comments[0]}</p>,
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+    const getItems = (panelStyle) => [
+        {
+            key: '1',
+            label: 'Thời gian đi',
+            children: <p style={{ fontWeight: 'normal' }}>{comments[0]}</p>,
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-            
-            
-            {
-                key: '2',
-                label: 'Thời gian trả phòng',
-                children: <p style={{ fontWeight: 'normal' }}>{comments[1]}</p>,
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+        },
+        {
+            key: '2',
+            label: 'Thời gian đặt vé',
+            children: <p style={{ fontWeight: 'normal' }}>{comments[1]}</p>,
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-            {
-                key: '3',
-                label: 'Quy định nhận phòng',
-                children: [
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[2]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[3]}</li></ul>,
-                    <ul style={{ fontWeight: 'normal' }}><li>{comments[4]}</li></ul>,
-                ],
-                style: {
-                    ...panelStyle,
-                    fontWeight: 'bold'
-                },
+        },
+        {
+            key: '3',
+            label: 'Quy định khi mua vé',
+            children: [
+                <ul key="3-1" style={{ fontWeight: 'normal' }}><li>{comments[2]}</li></ul>,
+                <ul key="3-2" style={{ fontWeight: 'normal' }}><li>{comments[3]}</li></ul>,
+                <ul key="3-3" style={{ fontWeight: 'normal' }}><li>{comments[4]}</li></ul>,
+            ],
+            style: {
+                ...panelStyle,
+                fontWeight: 'bold'
             },
-        ];
+        },
+    ];
+
     const { token } = theme.useToken();
     const panelStyle = {
-      marginBottom: 24,
-      background: token.colorBgContainer,
-      borderRadius: '20px',
-      border: '3px solid #CAF8F8',
-
+        marginBottom: 24,
+        background: token.colorBgContainer,
+        borderRadius: '20px',
+        border: '3px solid #CAF8F8',
     };
+
     return (
         <div style={{ backgroundImage: `url(${bgFb})`, backgroundSize: 'cover', height: '700px' }}>
             <Container>
@@ -85,7 +73,7 @@ const RegulationsPage = () => {
                 />
             </Container>
         </div>
-    )
+    );
 }
 
 export default RegulationsPage;

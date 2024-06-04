@@ -1,12 +1,11 @@
-import React from "react";
-import { WrapperTitle, WrapperTitle_1, WrapperTitle_0, WrapperTitle_2, Container, CardStyle, WrapperCard, WrapperDay, WrapperDetails, CardTitle, TitleDetails, CardDetails, Card, WrapCard, BlogStyle, Contentt } from "./style";
+import { WrapperTitle, WrapperTitle_1, WrapperTitle_0, WrapperTitle_2, Container, CardStyle, WrapperCard, WrapperDay, WrapperDetails, CardTitle, TitleDetails, CardDetails, Card, WrapCard, BlogStyle } from "./style";
 import bgFb from '../../assets/images/bg_full.jpg';
 import HaLong from '../../assets/images/HaLong.jpg';
 import QuangNinh from '../../assets/images/QuangNinh.jpg';
 import DiaDiemCheckIn from '../../assets/images/DiaDiemCheckIn.jpg';
-import { Pagination } from 'antd';
 import {useNavigate} from 'react-router-dom'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import FooterComponent from '../../components/FooterComponent/FooterComponent'
 
 const BlogPage = () => {
     // Tạo một mảng chứa dữ liệu cho các card
@@ -19,15 +18,15 @@ const BlogPage = () => {
         { title: "Top 5 resort nổi tiếng ở Hạ Long", details: "Hạ Long: Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.", src: 0  }
     ];
 
-    const itemRender = (_, type, originalElement) => {
-        if (type === 'prev') {
-          return <a>Previous</a>;
-        }
-        if (type === 'next') {
-          return <a>Next</a>;
-        }
-        return originalElement;
-      };
+    // const itemRender = (_, type, originalElement) => {
+    //     if (type === 'prev') {
+    //       return <a>Previous</a>;
+    //     }
+    //     if (type === 'next') {
+    //       return <a>Next</a>;
+    //     }
+    //     return originalElement;
+    //   };
 
     const navigate = useNavigate()
     const handleBlog = () => {
@@ -37,36 +36,39 @@ const BlogPage = () => {
     
 
     return (
-        <div style={{ backgroundImage: `url(${bgFb})`, backgroundSize: 'cover', height: '1200px', margin: '60px' }}>
-                <BlogStyle>
-                    <WrapperTitle_0>
-                        <WrapperTitle>Khám phá sự đặc sắc và Cập nhật tin tức mới nhất</WrapperTitle>
-                        <WrapperTitle_1>Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.</WrapperTitle_1>
-                        <WrapperTitle_2>`````````````</WrapperTitle_2>
-                    </WrapperTitle_0>
-                    <Container>
-                        {/* Sử dụng map để tạo ra các phần tử CardStyle từ mảng cardsData */}
-                        {cardsData.map((data, index) => (
-                                <CardStyle key={index} style={{cursor: 'pointer'}} onClick={handleBlog}>
-                                    <WrapCard>
-                                        <Card>
-                                            <WrapperCard >
-                                                <img src={data.src} alt="img" style={{ width: '100%', height: '100%', borderRadius: '32px' }}></img>
-                                            </WrapperCard>
-                                            <CardDetails>
-                                                <TitleDetails>
-                                                    <CardTitle>{data.title}</CardTitle>
-                                                    <WrapperDetails>{data.details}</WrapperDetails>
-                                                </TitleDetails>
-                                                <WrapperDay>{data.date}</WrapperDay>
-                                            </CardDetails>
-                                        </Card>
-                                    </WrapCard>
-                                </CardStyle>
-                        ))}
-                    </Container>
-                </BlogStyle>
-            
+        <div>
+            <div style={{ backgroundImage: `url(${bgFb})`, backgroundSize: 'cover', height: '1200px', margin: '60px' }}>
+                    <BlogStyle>
+                        <WrapperTitle_0>
+                            <WrapperTitle>Khám phá sự đặc sắc và Cập nhật tin tức mới nhất</WrapperTitle>
+                            <WrapperTitle_1>Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.</WrapperTitle_1>
+                            <WrapperTitle_2>`````````````</WrapperTitle_2>
+                        </WrapperTitle_0>
+                        <Container>
+                            {/* Sử dụng map để tạo ra các phần tử CardStyle từ mảng cardsData */}
+                            {cardsData.map((data, index) => (
+                                    <CardStyle key={index} style={{cursor: 'pointer'}} onClick={handleBlog}>
+                                        <WrapCard>
+                                            <Card>
+                                                <WrapperCard >
+                                                    <img src={data.src} alt="img" style={{ width: '100%', height: '100%', borderRadius: '32px' }}></img>
+                                                </WrapperCard>
+                                                <CardDetails>
+                                                    <TitleDetails>
+                                                        <CardTitle>{data.title}</CardTitle>
+                                                        <WrapperDetails>{data.details}</WrapperDetails>
+                                                    </TitleDetails>
+                                                    <WrapperDay>{data.date}</WrapperDay>
+                                                </CardDetails>
+                                            </Card>
+                                        </WrapCard>
+                                    </CardStyle>
+                            ))}
+                        </Container>
+                    </BlogStyle>
+                
+            </div>
+            <FooterComponent></FooterComponent>
         </div>
     )
 }
