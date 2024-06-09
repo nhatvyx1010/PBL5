@@ -39,6 +39,7 @@ const SignInPage = () => {
                 alert(data.meta.error);
             } else if (data.meta.status_code === 200 && data.data.result.accessToken) {
                 dispatch(updateUser({
+                    userId: data.data.result.userId,
                     // name: data.data.result.fullName,
                     // email: data.data.result.email,
                     access_token: data.data.result.accessToken,

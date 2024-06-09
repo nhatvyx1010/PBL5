@@ -58,18 +58,6 @@ const HistoryUser = () => {
 
   const columns = [
     {
-      title: 'Request ID',
-      dataIndex: 'orderId',
-      fixed: 'left',
-      width: 150,
-      key: 'orderId'
-    },
-    {
-      title: 'User ID',
-      dataIndex: 'userId',
-      key: 'userId'
-    },
-    {
       title: 'Paid Date',
       dataIndex: 'paidDate',
       key: 'paidDate',
@@ -107,7 +95,7 @@ const HistoryUser = () => {
             columns={columns}
             pagination={{ pageSize: 7 }}
             dataSource={reqData}
-            scroll={{ x: 1300 }}
+            scroll={{ x: 1000 }}
           />
         ) : (
           <p>Loading...</p>
